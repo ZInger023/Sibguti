@@ -146,8 +146,8 @@ int sc_commandDecode(int *operand, int *command, int value)
         else
         {
             sc_regSet(1, C);
+            return -1;
         }
-        return -1;
     }
     else
     {
