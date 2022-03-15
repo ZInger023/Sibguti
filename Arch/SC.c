@@ -186,7 +186,6 @@ int main()
     sc_memoryGet(2, value);
     printf("Load %d\n", *value);
     sc_regSet(1, 2);
-    int *flag = calloc(1, sizeof(int));
     sc_regGet(2, flag);
     printf("Flag = %d\n", *flag);
     return 0;
