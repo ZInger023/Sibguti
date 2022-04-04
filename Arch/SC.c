@@ -146,8 +146,8 @@ int sc_commandDecode(int *operand, int *command, int value)
         else
         {
             sc_regSet(1, C);
+            return -1;
         }
-        return -1;
     }
     else
     {
@@ -186,8 +186,6 @@ int main()
     sc_memoryGet(2, value);
     printf("Load %d\n", *value);
     sc_regSet(1, 2);
-    int *flag = calloc(1, sizeof(int));
-    registr = INVERT(2);
     sc_regGet(2, flag);
     printf("Flag = %d\n", *flag);
     return 0;
