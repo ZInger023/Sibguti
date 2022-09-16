@@ -1,13 +1,83 @@
 #!/bin/bash
-echo -e "\033[2J"
-echo -e "\033[5;10H \E[31m Kulinich Mihail"
-echo -e "\033[6;8H \E[32m \E[47m IV-023"
-echo -e "\033[10;1H \E[0m"
-echo "$LINES"
+ 
+echo "Current date: "
+date +'%e.%m.%Y'
+ 
+echo "Account name: "
+whoami
+ 
+echo "PC name: "
+hostname
+ 
+ 
+echo -e "\t \t \c"
+echo "CPU info: "
+cat /proc/cpuinfo | grep 'model name' | uniq
+lscpu | grep 'Архитектура'
+cat /proc/cpuinfo | grep 'cpu MHz'  
+echo -n "CPU(s): "
+nproc 
+lscpu | grep 'Потоков на ядро' 
+echo "RAM info: "
+cat /proc/meminfo | grep 'MemTotal' 
+cat /proc/meminfo | grep 'MemFree' 
 
-echo -e "\033[m"
 
-exit 0
+echo -e "\t \t \c"
+ 
+echo "Hard drive info: "
+echo "Всего"
+df -H | grep '/dev/sda6' | awk '{print $2}'
+echo "Свободно"
+df -H | grep '/dev/sda6' | awk '{print $4}'
+echo "Смонтировано в корневую директорию"
+df -H | grep '/dev/sda6' | awk '{print $6}'
+echo "SWAP memory"
+echo "Всего"
+free -h | grep 'Подкачка' | awk '{print $2}'
+echo "Доступно"
+free -h | grep 'Подкачка' | awk '{print $4}'
 
 
-# chmod +x test.sh
+echo -e "\t \t \c" 
+num_of_ports=0;
+for iface in $(ls /sys/class/net/)
+do 
+num_ports=$[$num_ports+1]
+done
+
+echo
+echo "Количество сетевых интерфейсов – $num_ports"
+echo
+
+echo -e "Имя cетевого интерфейса \t MAC адрес \t\t IP адрес \t Скорость соединения"
+
+for iface in $(ls /sys/class/net/)
+do 
+echo -e "$iface\t\t\t \c"
+
+mac="$(ifconfig $iface | grep -i "ether" | awk '{print $2}')"
+if [[ -n $mac ]];
+then
+	echo -e "\t $mac \t \c"
+else
+	echo -e "\t null \t\t\t \c"
+fi
+
+ip="$(ifconfig $iface | grep -i "inet " | awk '{print $2}')"
+if [[ -n $ip ]];
+then
+	echo -e "$ip \t \c"
+else
+	echo -e "null \t\t \c"
+fi
+
+speed=$(cat /sys/class/net/$iface/speed 2> /dev/null)
+
+if [[ $speed ]]
+then
+	echo $speed
+else
+	echo "null"
+fi
+done
