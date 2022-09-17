@@ -1,25 +1,28 @@
 #!/bin/bash
  
-echo "Current date: "
+echo "Дата: "
 date +'%e.%m.%Y'
  
-echo "Account name: "
+echo "Имя учетной записи: "
 whoami
  
-echo "PC name: "
+echo "Доменное имя ПК: "
 hostname
  
  
 echo -e "\t \t \c"
-echo "CPU info: "
+echo "Процессор: "
 cat /proc/cpuinfo | grep 'model name' | uniq
 lscpu | grep 'Архитектура'
+echo "Тактовая частота"
 cat /proc/cpuinfo | grep 'cpu MHz'  
-echo -n "CPU(s): "
+echo -n "Количество ядер: "
 nproc 
 lscpu | grep 'Потоков на ядро' 
-echo "RAM info: "
+echo "Оперативная память: "
+echo "Всего"
 cat /proc/meminfo | grep 'MemTotal' 
+echo "Доступно"
 cat /proc/meminfo | grep 'MemFree' 
 
 
