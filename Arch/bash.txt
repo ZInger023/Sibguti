@@ -25,21 +25,20 @@ cat /proc/meminfo | grep 'MemTotal'
 echo "Доступно"
 cat /proc/meminfo | grep 'MemFree' 
 
-
 echo -e "\t \t \c"
  
 echo "Hard drive info: "
 echo "Всего"
-df -H | grep '/dev/sda6' | awk '{print $2}'
+df -H | grep '/dev/sda1' | awk '{print $2}'
 echo "Свободно"
-df -H | grep '/dev/sda6' | awk '{print $4}'
+df -H | grep '/dev/sda1' | awk '{print $4}'
 echo "Смонтировано в корневую директорию"
-df -H | grep '/dev/sda6' | awk '{print $6}'
+df -h  /  | grep 'система' --no-group-separator -A1| grep -v 'система'| awk '{print $2}' 
 echo "SWAP memory"
 echo "Всего"
-free -h | grep 'Подкачка' | awk '{print $2}'
+free -h | grep 'Swap' | awk '{print $2}'
 echo "Доступно"
-free -h | grep 'Подкачка' | awk '{print $4}'
+free -h | grep 'Swap' | awk '{print $4}'
 
 
 echo -e "\t \t \c" 
